@@ -32,6 +32,12 @@ public class AdminController {
         return new ResponseEntity<>(createdAdmin, HttpStatus.CREATED);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Admin> editAdmin(@RequestBody Admin admin, @PathVariable Long id) {
+        Admin editedAdmin = adminService.editAdmin(id, admin);
+        return new ResponseEntity<>(editedAdmin, HttpStatus.CREATED);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteAdmin(@PathVariable Long id) {
         adminService.deleteAdmin(id);

@@ -1,5 +1,6 @@
 package com.example.cafe.controller;
 
+import com.example.cafe.model.Admin;
 import com.example.cafe.model.User;
 import com.example.cafe.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,12 @@ public class UserController {
     public ResponseEntity<User> createUser(@RequestBody User user) {
         User createdUser = userService.createUser(user);
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<User> editUser(@RequestBody User user, @PathVariable Long id) {
+        User editedUser = userService.editUser(id, user);
+        return new ResponseEntity<>(editedUser, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")

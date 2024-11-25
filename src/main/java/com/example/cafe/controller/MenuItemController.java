@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/menu-items")
+
 public class MenuItemController {
     @Autowired
     private MenuItemService menuItemService;
@@ -30,6 +31,12 @@ public class MenuItemController {
     public ResponseEntity<MenuItem> createMenuItem(@RequestBody MenuItem menuItem) {
         MenuItem createdMenuItem = menuItemService.createMenuItem(menuItem);
         return new ResponseEntity<>(createdMenuItem, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<MenuItem> editMenuItem(@RequestBody MenuItem menu, @PathVariable Long id) {
+        MenuItem editedMenu = menuItemService.editMenuItem(id, menu);
+        return new ResponseEntity<>(editedMenu, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")

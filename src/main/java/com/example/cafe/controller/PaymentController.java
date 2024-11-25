@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -30,6 +29,12 @@ public class PaymentController {
     public ResponseEntity<Payment> createPayment(@RequestBody Payment payment) {
         Payment createdPayment = paymentService.createPayment(payment);
         return new ResponseEntity<>(createdPayment, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Payment> editOrder(@RequestBody Payment payment, @PathVariable Long id) {
+        Payment editedPayment = paymentService.editPayment(id, payment);
+        return new ResponseEntity<>(editedPayment, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")

@@ -1,5 +1,6 @@
 package com.example.cafe.controller;
 
+import com.example.cafe.model.MenuItem;
 import com.example.cafe.model.Order;
 import com.example.cafe.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,12 @@ public class OrderController {
     public ResponseEntity<Order> createOrder(@RequestBody Order order) {
         Order createdOrder = orderService.createOrder(order);
         return new ResponseEntity<>(createdOrder, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Order> editOrder(@RequestBody Order order, @PathVariable Long id) {
+        Order editedOrder = orderService.editOrder(id, order);
+        return new ResponseEntity<>(editedOrder, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
