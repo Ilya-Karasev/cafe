@@ -1,10 +1,15 @@
 package com.example.cafe.model;
 
 import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+import java.util.Collections;
 
 @Entity
 @Table(name = "\"user\"")
-public class User {
+public class User  implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -14,7 +19,6 @@ public class User {
     private String password;
     private boolean isAdmin;
     private String phone;
-
 
     public Long getId() {
         return id;
@@ -26,6 +30,35 @@ public class User {
 
     public String getUsername() {
         return username;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        // Return roles based on isAdmin field
+        if (isAdmin) {
+            return Collections.singleton(() -> "ROLE_ADMIN");
+        }
+        return Collections.singleton(() -> "ROLE_USER");
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
     public void setUsername(String username) {
