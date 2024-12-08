@@ -9,7 +9,7 @@ import java.util.Collections;
 
 @Entity
 @Table(name = "\"user\"")
-public class User  implements UserDetails {
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -34,11 +34,17 @@ public class User  implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // Return roles based on isAdmin field
         if (isAdmin) {
             return Collections.singleton(() -> "ROLE_ADMIN");
         }
         return Collections.singleton(() -> "ROLE_USER");
+    }
+
+    public Collection<String> getRoles() {
+        if (isAdmin) {
+            return Collections.singleton("ROLE_ADMIN");
+        }
+        return Collections.singleton("ROLE_USER");
     }
 
     @Override

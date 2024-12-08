@@ -4,6 +4,8 @@ import com.example.cafe.repository.*;
 import com.github.javafaker.Faker;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -37,14 +39,24 @@ public class DataFakerService {
     }
 
     public void generateUsers(int count) {
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();  // Создайте экземпляр BCryptPasswordEncoder
+
         for (int i = 0; i < count; i++) {
             User user = new User();
-            user.setUsername(faker.name().username());
+
+            String username = faker.name().username(); // Генерация имени пользователя
+            String password = username; // Пароль совпадает с именем пользователя
+
+            // Шифруем пароль перед сохранением
+            String encodedPassword = passwordEncoder.encode(password);
+
+            user.setUsername(username);
             user.setEmail(faker.internet().emailAddress());
-            user.setPassword(faker.internet().password());
+            user.setPassword(encodedPassword);  // Сохраняем зашифрованный пароль
             user.setAdmin(false);
             user.setPhone(faker.phoneNumber().phoneNumber());
-            userRepository.save(user);
+
+            userRepository.save(user); // Сохраняем пользователя с зашифрованным паролем
         }
     }
 

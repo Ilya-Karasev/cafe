@@ -6,18 +6,25 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.Collections;
+import java.util.stream.Collectors;
 
 public class CustomUserDetails implements UserDetails {
+
     private final User user;
 
     public CustomUserDetails(User user) {
         this.user = user;
     }
 
+    public User getUser() {
+        return user;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singletonList(new SimpleGrantedAuthority(user.isAdmin() ? "ROLE_ADMIN" : "ROLE_USER"));
+        return user.getRoles().stream()
+                .map(SimpleGrantedAuthority::new) // Pass the role string directly
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -47,6 +54,6 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return user.isEnabled();
     }
 }
