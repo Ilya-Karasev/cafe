@@ -4,7 +4,6 @@ import com.example.cafe.model.CartItem;
 import com.example.cafe.repository.CartItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -37,5 +36,15 @@ public class CartItemService {
 
     public void deleteCartItem(Long id) {
         cartItemRepository.deleteById(id);
+    }
+
+    // КОРЗИНА
+
+    public CartItem save(CartItem cartItem) {
+        return cartItemRepository.save(cartItem);
+    }
+
+    public void delete(Long cartItemId) {
+        cartItemRepository.deleteById(cartItemId);
     }
 }

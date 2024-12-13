@@ -10,16 +10,15 @@ public class CartItem {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "cart_id")
+    @JoinColumn(name = "cart_id", nullable = false)
     private Cart cart;
 
     @ManyToOne
-    @JoinColumn(name = "menu_item_id")
+    @JoinColumn(name = "menu_item_id", nullable = false)
     private MenuItem menuItem;
 
     private int quantity;
 
-    @Column(name = "total_price")
     private BigDecimal totalPrice;
 
 
