@@ -1,15 +1,15 @@
 package com.example.cafe.model;
 
 import jakarta.persistence.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+//import org.springframework.security.core.GrantedAuthority;
+//import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Collections;
 
 @Entity
 @Table(name = "\"user\"")
-public class User implements UserDetails {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -32,40 +32,40 @@ public class User implements UserDetails {
         return username;
     }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        if (isAdmin) {
-            return Collections.singleton(() -> "ROLE_ADMIN");
-        }
-        return Collections.singleton(() -> "ROLE_USER");
-    }
-
-    public Collection<String> getRoles() {
-        if (isAdmin) {
-            return Collections.singleton("ROLE_ADMIN");
-        }
-        return Collections.singleton("ROLE_USER");
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
+//    @Override
+//    public Collection<? extends GrantedAuthority> getAuthorities() {
+//        if (isAdmin) {
+//            return Collections.singleton(() -> "ROLE_ADMIN");
+//        }
+//        return Collections.singleton(() -> "ROLE_USER");
+//    }
+//
+//    public Collection<String> getRoles() {
+//        if (isAdmin) {
+//            return Collections.singleton("ROLE_ADMIN");
+//        }
+//        return Collections.singleton("ROLE_USER");
+//    }
+//
+//    @Override
+//    public boolean isAccountNonExpired() {
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean isAccountNonLocked() {
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean isCredentialsNonExpired() {
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean isEnabled() {
+//        return true;
+//    }
 
     public void setUsername(String username) {
         this.username = username;
